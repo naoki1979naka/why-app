@@ -32,7 +32,6 @@ export default function Home() {
       { role: "assistant", content: data.reply },
     ]);
 
-    // 🔥 ここが重要
     if (!sessionId && data.sessionId) {
       setSessionId(data.sessionId);
     }
@@ -41,19 +40,53 @@ export default function Home() {
     setLoading(false);
   };
 
-  return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-white p-6">
-      <div className="w-full max-w-xl space-y-4">
-        <h1 className="text-3xl font-light text-center">WHY</h1>
+  const handleSupport = () => {
+    alert("将来的にStripe決済を接続します 🌙");
+  };
 
-        <div className="space-y-2 min-h-[200px]">
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-center bg-neutral-950 text-neutral-100 p-6">
+      <div className="w-full max-w-xl space-y-10">
+
+        {/* タイトル */}
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-light tracking-wide">
+            WHY
+          </h1>
+
+          <div className="space-y-1 text-neutral-400">
+            <p className="text-lg">ただ生きるために。</p>
+            <p className="text-sm">外側は静かに、</p>
+            <p className="text-sm">内側は深く。</p>
+          </div>
+        </div>
+
+        {/* サポートエリア */}
+        <div className="text-center space-y-3">
+          <button
+            onClick={handleSupport}
+            className="text-sm border border-neutral-700 px-4 py-2 rounded hover:bg-neutral-800 transition"
+          >
+            🌙 この場所を支える
+          </button>
+
+          <button
+            onClick={handleSupport}
+            className="text-xs text-neutral-500 hover:text-neutral-300 transition"
+          >
+            ☕ そっと応援する
+          </button>
+        </div>
+
+        {/* メッセージ表示 */}
+        <div className="space-y-3 min-h-[200px]">
           {messages.map((msg, index) => (
             <div
               key={index}
-              className={`p-3 rounded ${
+              className={`p-4 rounded-lg text-sm leading-relaxed ${
                 msg.role === "user"
-                  ? "bg-gray-200 text-right"
-                  : "bg-black text-white"
+                  ? "bg-neutral-800 text-right"
+                  : "bg-neutral-700 text-left"
               }`}
             >
               {msg.content}
@@ -61,21 +94,23 @@ export default function Home() {
           ))}
         </div>
 
+        {/* 入力欄 */}
         <div className="flex gap-2">
           <input
-            className="flex-1 border p-2"
+            className="flex-1 bg-neutral-900 border border-neutral-700 p-3 rounded text-sm focus:outline-none"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="あなたはなぜ生きていると思いますか？"
+            placeholder="なぜ生きているのだろう。"
           />
           <button
             onClick={sendMessage}
             disabled={loading}
-            className="px-4 py-2 border border-black hover:bg-black hover:text-white"
+            className="px-4 py-2 border border-neutral-600 rounded hover:bg-neutral-800 transition"
           >
             {loading ? "..." : "送信"}
           </button>
         </div>
+
       </div>
     </main>
   );
